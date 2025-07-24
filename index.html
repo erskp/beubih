@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Lab</title>
+    <title>Interactive Python Lab Manual</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Midnight Slate -->
     <!-- Application Structure Plan: A single-column, mobile-first layout. The sidebar is removed and replaced with a dropdown filter for categories, placed next to the search bar. This creates a streamlined, responsive interface that works well on all devices. Key interactions: Category filtering via dropdown, live search, and accordion toggles to show/hide code. This structure prioritizes content and accessibility on smaller screens. -->
@@ -28,9 +28,19 @@
             font-family: 'Segoe UI', 'Inter', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-primary);
+            font-size: 14px; /* Smaller base font size */
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
+        }
+        h1 {
+            font-size: 1.875rem; /* 30px */
+        }
+        .accordion-btn span {
+            font-size: 1rem; /* 16px */
+        }
+        pre, code {
+            font-size: 0.875rem; /* 14px */
         }
         .accordion-content {
             max-height: 0;
@@ -53,7 +63,6 @@
         .accordion-btn.open svg {
             transform: rotate(180deg);
         }
-        /* Custom style for the select dropdown arrow */
         select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -75,15 +84,13 @@
     <main class="p-4 sm:p-6 md:p-8">
         <div class="max-w-5xl mx-auto">
             <header class="mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Python Lab</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Python Lab Solutions</h1>
                 <p class="text-slate-400 mt-2 text-center">An interactive guide to the Python lab exercises.</p>
                 
-                <!-- Filter and Search Controls -->
                 <div class="mt-8 flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
                         <label for="category-select" class="sr-only">Filter by category</label>
                         <select id="category-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
-                            <!-- Categories will be injected here -->
                         </select>
                     </div>
                     <div class="flex-1">
@@ -94,10 +101,9 @@
             </header>
 
             <div id="problems-container" class="space-y-4">
-                <!-- Problems will be injected here -->
             </div>
-             <footer class="text-center mt-12 text-slate-500 text-sm">
-                <p>Created for Exampaglus</p>
+             <footer class="text-center mt-12 text-slate-500 text-xs">
+                <p>Created for Sandeep Kumar (Reg. No.: 24105124010) | CSE</p>
             </footer>
         </div>
     </main>
@@ -106,213 +112,213 @@
         const labData = [
             {
                 category: "Variables & Functions",
-                title: "1. Demonstrate different number data types",
-                code: `# Integer\na = 10\nprint(f"'{a}' is an Integer: {type(a)}")\n\n# Float (decimal number)\nb = 10.5\nprint(f"'{b}' is a Float: {type(b)}")\n\n# Complex number\nc = 1 + 2j\nprint(f"'{c}' is a Complex number: {type(c)}")`,
-                output: `'10' is an Integer: <class 'int'>\n'10.5' is a Float: <class 'float'>\n'(1+2j)' is a Complex number: <class 'complex'>`
+                title: "1. Write a program to demonstrate different number data types in Python.",
+                code: `a = 10       # Integer\nb = 10.5     # Float\nc = 1 + 2j   # Complex\n\nprint(type(a))\nprint(type(b))\nprint(type(c))`,
+                output: `&lt;class 'int'&gt;\n&lt;class 'float'&gt;\n&lt;class 'complex'&gt;`
             },
             {
                 category: "Variables & Functions",
-                title: "2. Perform different Arithmetic Operations",
-                code: `a = 20\nb = 5\n\n# Addition\nprint(f"Addition: {a} + {b} = {a + b}")\n# Subtraction\nprint(f"Subtraction: {a} - {b} = {a - b}")\n# Multiplication\nprint(f"Multiplication: {a} * {b} = {a * b}")\n# Division\nprint(f"Division: {a} / {b} = {a / b}")\n# Floor Division\nprint(f"Floor Division: {a} // {b} = {a // b}")\n# Modulus\nprint(f"Modulus: {a} % {b} = {a % b}")\n# Exponentiation\nprint(f"Exponentiation: {a} ** {b} = {a ** b}")`,
-                output: `Addition: 20 + 5 = 25\nSubtraction: 20 - 5 = 15\nMultiplication: 20 * 5 = 100\nDivision: 20 / 5 = 4.0\nFloor Division: 20 // 5 = 4\nModulus: 20 % 5 = 0\nExponentiation: 20 ** 5 = 3200000`
+                title: "2. Write a program to perform different Arithmetic Operations on numbers in Python.",
+                code: `a = 20\nb = 5\n\nprint(a + b)  # Addition\nprint(a - b)  # Subtraction\nprint(a * b)  # Multiplication\nprint(a / b)  # Division`,
+                output: `25\n15\n100\n4.0`
             },
             {
                 category: "Variables & Functions",
-                title: "3. Create, concatenate, and access sub-strings",
-                code: `# Create strings\nstr1 = "Hello"\nstr2 = "World"\n\n# Concatenate strings\nconcatenated_str = str1 + " " + str2\nprint(f"Concatenated String: {concatenated_str}")\n\n# Accessing a sub-string (slicing)\nsub_string = concatenated_str[6:11]\nprint(f"Sub-string: {sub_string}")`,
-                output: `Concatenated String: Hello World\nSub-string: World`
+                title: "3. Write a program to create, concatenate and print a string and accessing sub-string from a given string.",
+                code: `str1 = "Hello"\nstr2 = "World"\n\n# Concatenate\nresult = str1 + " " + str2\nprint(result)\n\n# Access sub-string (from index 6 to end)\nsub = result[6:]\nprint(sub)`,
+                output: `Hello World\nWorld`
             },
             {
                 category: "Variables & Functions",
-                title: "4. Check if an Integer is Positive or Negative",
-                code: `number = -15\n\nif number > 0:\n    print(f"The number {number} is Positive.")\nelif number < 0:\n    print(f"The number {number} is Negative.")\nelse:\n    print("The number is Zero.")`,
-                output: `The number -15 is Negative.`
+                title: "4. Create a variable 'number' and assign an Integer to the number. Check the assigned Integer is 'Positive' or 'Negative'.",
+                code: `number = -15\n\nif number > 0:\n    print("Positive")\nelif number < 0:\n    print("Negative")\nelse:\n    print("Zero")`,
+                output: `Negative`
             },
             {
                 category: "Variables & Functions",
-                title: "5. Find the largest among three Numbers",
-                code: `num1 = 10\nnum2 = 55\nnum3 = 25\n\nif (num1 >= num2) and (num1 >= num3):\n   largest = num1\nelif (num2 >= num1) and (num2 >= num3):\n   largest = num2\nelse:\n   largest = num3\n\nprint(f"The largest number is {largest}")\n\n# A simpler way using max()\nprint(f"The largest number (using max()) is {max(num1, num2, num3)}")`,
-                output: `The largest number is 55\nThe largest number (using max()) is 55`
+                title: "5. Write a program to find the largest element among three Numbers.",
+                code: `num1 = 10\nnum2 = 55\nnum3 = 25\n\n# Using the built-in max() function is the simplest way\nlargest = max(num1, num2, num3)\nprint(largest)`,
+                output: `55`
             },
             {
                 category: "Variables & Functions",
-                title: "6. Sum of even numbers in a range",
-                code: `even_sum = 0\nfor number in range(-50, 51):\n    if number % 2 == 0:\n        even_sum += number\n\nprint(f"The sum of all even numbers from -50 to 50 is: {even_sum}")`,
-                output: `The sum of all even numbers from -50 to 50 is: 0`
+                title: "6. Write a program to print the sum of all the even numbers in the range |-50 and print the even sum.",
+                code: `even_sum = 0\n# The range is from -50 to 50\nfor number in range(-50, 51):\n    if number % 2 == 0:\n        even_sum += number\n\nprint(even_sum)`,
+                output: `0`
             },
             {
                 category: "Variables & Functions",
-                title: "7. Display prime numbers within an interval",
-                code: `print("Prime numbers between 20 and 50 are:")\n\nfor num in range(20, 51):\n   if num > 1:\n       for i in range(2, num):\n           if (num % i) == 0:\n               break\n       else:\n           print(num)`,
-                output: `Prime numbers between 20 and 50 are:\n23\n29\n31\n37\n41\n43\n47`
+                title: "7. Write a Program to display all prime numbers within an interval of 20 and 50.",
+                code: `# Prime numbers between 20 and 50\nfor num in range(20, 51):\n   if num > 1:\n       # Check for factors\n       for i in range(2, num):\n           if (num % i) == 0:\n               break\n       else:\n           print(num)`,
+                output: `23\n29\n31\n37\n41\n43\n47`
             },
             {
                 category: "Variables & Functions",
-                title: "8. Swap two numbers without a temporary variable",
-                code: `a = 10\nb = 20\n\nprint(f"Before swap: a = {a}, b = {b}")\n\na, b = b, a\n\nprint(f"After swap: a = {a}, b = {b}")`,
-                output: `Before swap: a = 10, b = 20\nAfter swap: a = 20, b = 10`
+                title: "8. Write a program to swap two numbers without using a temporary variable.",
+                code: `a = 10\nb = 20\n\nprint(f"Before: a={a}, b={b}")\n\n# Pythonic way to swap\na, b = b, a\n\nprint(f"After: a={a}, b={b}")`,
+                output: `Before: a=10, b=20\nAfter: a=20, b=10`
             },
             {
                 category: "Variables & Functions",
-                title: "9. Define a function with multiple return values",
-                code: `def get_user_info():\n    name = "Alex"\n    age = 30\n    city = "New York"\n    return name, age, city\n\nuser_name, user_age, user_city = get_user_info()\n\nprint(f"Name: {user_name}")\nprint(f"Age: {user_age}")\nprint(f"City: {user_city}")`,
-                output: `Name: Alex\nAge: 30\nCity: New York`
+                title: "9. Write a program to define a function with multiple return values.",
+                code: `def get_user():\n    name = "Alex"\n    age = 30\n    return name, age\n\nuser_name, user_age = get_user()\n\nprint(user_name)\nprint(user_age)`,
+                output: `Alex\n30`
             },
             {
                 category: "Variables & Functions",
-                title: "10. Find factorial of a number using Recursion",
-                code: `def factorial(n):\n   if n == 1 or n == 0:\n       return 1\n   else:\n       return n * factorial(n-1)\n\nnumber = 5\nprint(f"The factorial of {number} is {factorial(number)}")`,
-                output: `The factorial of 5 is 120`
+                title: "10. Write a python program to find factorial of a number using Recursion.",
+                code: `def factorial(n):\n   if n == 0:\n       return 1\n   else:\n       return n * factorial(n-1)\n\nprint(factorial(5))`,
+                output: `120`
             },
             {
                 category: "Variables & Functions",
-                title: "11. Print the current date in a specific format",
-                code: `import time\n\nprint(time.strftime("%a %b %d %H:%M:%S %Z %Y"))`,
-                output: `(Output will vary based on current time)\nExample: Thu Jul 25 07:16:00 IST 2025`
+                title: "11. Write a python script to print the current date in the following format 'WED 09 02:26:23 IST 2020'.",
+                code: `import time\n\n# Format: Weekday Month Day HH:MM:SS Year\nprint(time.ctime())`,
+                output: `(Output will vary based on current time)\nExample: Thu Jul 24 08:00:00 2025`
             },
             {
                 category: "Variables & Functions",
-                title: "12. Convert temperatures (Celsius/Fahrenheit)",
-                code: `def celsius_to_fahrenheit(c):\n    return (c * 9/5) + 32\n\ndef fahrenheit_to_celsius(f):\n    return (f - 32) * 5/9\n\ncelsius_temp = 37\nfahrenheit_temp = 98.6\n\nprint(f"{celsius_temp}°C is {celsius_to_fahrenheit(celsius_temp)}°F")\nprint(f"{fahrenheit_temp}°F is {fahrenheit_to_celsius(fahrenheit_temp):.2f}°C")`,
-                output: `37°C is 98.6°F\n98.6°F is 37.00°C`
+                title: "12. Write a Python program to convert temperatures to and from Celsius, Fahrenheit.",
+                code: `def celsius_to_fahrenheit(c):\n    return (c * 9/5) + 32\n\ncelsius = 37\nfahrenheit = celsius_to_fahrenheit(celsius)\nprint(fahrenheit)`,
+                output: `98.6`
             },
             {
                 category: "Variables & Functions",
-                title: "13. Print prime numbers less than 20",
-                code: `print("Prime numbers less than 20 are:")\nfor num in range(2, 20):\n    if num > 1:\n        for i in range(2, num):\n            if (num % i) == 0:\n                break\n        else:\n            print(num)`,
-                output: `Prime numbers less than 20 are:\n2\n3\n5\n7\n11\n13\n17\n19`
+                title: "13. Write a Python script that prints prime numbers less than 20.",
+                code: `for num in range(2, 20):\n    if num > 1:\n       for i in range(2, num):\n           if (num % i) == 0:\n               break\n       else:\n           print(num)`,
+                output: `2\n3\n5\n7\n11\n13\n17\n19`
             },
             {
                 category: "Loops & Conditionals",
-                title: "14. Print patterns using a loop",
-                code: `rows = 4\nfor i in range(1, rows + 1):\n    print("*" * i)`,
+                title: "14. Write a program to print the following patterns using loop: * ** *** ****",
+                code: `for i in range(1, 5):\n    print("*" * i)`,
                 output: `*\n**\n***\n****`
             },
             {
                 category: "Loops & Conditionals",
-                title: "15. Print multiplication tables",
-                code: `tables = [8, 15, 69]\n\nfor table_num in tables:\n    print(f"--- Multiplication Table of {table_num} ---")\n    for i in range(1, 11):\n        print(f"{table_num} x {i} = {table_num * i}")\n    print("-" * 25)`,
-                output: `--- Multiplication Table of 8 ---\n8 x 1 = 8\n...\n8 x 10 = 80\n-------------------------\n--- Multiplication Table of 15 ---\n15 x 1 = 15\n...\n15 x 10 = 150\n-------------------------\n--- Multiplication Table of 69 ---\n69 x 1 = 69\n...\n69 x 10 = 690\n-------------------------`
+                title: "15. Write a program to print multiplication tables of 8, 15, 69.",
+                code: `num = 8\nfor i in range(1, 11):\n    print(f"{num} x {i} = {num * i}")`,
+                output: "8 x 1 = 8\n8 x 2 = 16\n8 x 3 = 24\n8 x 4 = 32\n8 x 5 = 40\n8 x 6 = 48\n8 x 7 = 56\n8 x 8 = 64\n8 x 9 = 72\n8 x 10 = 80"
             },
             {
                 category: "Loops & Conditionals",
-                title: "16. Check input type (digit, lower, upper, special)",
-                code: `char = input("Enter a character: ")\n\nif char.isdigit():\n    print(f"'{char}' is a digit.")\nelif char.islower():\n    print(f"'{char}' is a lowercase character.")\nelif char.isupper():\n    print(f"'{char}' is an uppercase character.")\nelse:\n    print(f"'{char}' is a special character.")`,
-                output: `(User input required)\nEnter a character: a\n'a' is a lowercase character.`
+                title: "16. Write a program to check whether the given input is digit or lowercase character or uppercase character or a special character.",
+                code: `char = 'a' # Example input\n\nif char.isdigit():\n    print("Digit")\nelif char.islower():\n    print("Lowercase")\nelif char.isupper():\n    print("Uppercase")\nelse:\n    print("Special Character")`,
+                output: `Lowercase`
             },
             {
                 category: "Loops & Conditionals",
-                title: "17. Print the Fibonacci sequence using a while loop",
-                code: `n_terms = 10\nn1, n2 = 0, 1\ncount = 0\n\nprint("Fibonacci sequence:")\nwhile count < n_terms:\n   print(n1, end='  ')\n   nth = n1 + n2\n   n1 = n2\n   n2 = nth\n   count += 1\nprint()`,
-                output: `Fibonacci sequence:\n0  1  1  2  3  5  8  13  21  34`
+                title: "17. Write a python Program to print the Fibonacci sequence using while loop.",
+                code: `n_terms = 10\nn1, n2 = 0, 1\ncount = 0\n\nwhile count < n_terms:\n   print(n1)\n   nth = n1 + n2\n   n1 = n2\n   n2 = nth\n   count += 1`,
+                output: `0\n1\n1\n2\n3\n5\n8\n13\n21\n34`
             },
             {
                 category: "Strings",
-                title: "18. Find string length without library functions",
-                code: `my_string = "Hello World"\ncount = 0\nfor char in my_string:\n    count += 1\n\nprint(f"The length of the string is: {count}")`,
-                output: `The length of the string is: 11`
+                title: "18. Write a program to find the length of the string without using any library functions.",
+                code: `my_string = "Hello"\ncount = 0\nfor char in my_string:\n    count += 1\nprint(count)`,
+                output: `5`
             },
             {
                 category: "Strings",
-                title: "19. Check if two strings are anagrams",
-                code: `str1 = "listen"\nstr2 = "silent"\n\nif(sorted(str1) == sorted(str2)):\n    print("The strings are anagrams.")\nelse:\n    print("The strings are not anagrams.")`,
-                output: `The strings are anagrams.`
+                title: "19. Write a program to check if two strings are anagrams or not.",
+                code: `str1 = "listen"\nstr2 = "silent"\n\nif sorted(str1) == sorted(str2):\n    print("Anagrams")\nelse:\n    print("Not Anagrams")`,
+                output: `Anagrams`
             },
             {
                 category: "Strings",
-                title: "20. Check for a substring using regular expressions",
-                code: `import re\n\nmy_string = "The quick brown fox jumps over the lazy dog."\nsubstring = "fox"\n\nif re.search(substring, my_string):\n    print(f"Substring '{substring}' found in the string.")\nelse:\n    print(f"Substring '{substring}' not found.")`,
-                output: `Substring 'fox' found in the string.`
+                title: "20. Write a program to check if the substring is present in a given string or not (use regular expressions).",
+                code: `import re\n\nmy_string = "The quick brown fox"\nsubstring = "fox"\n\nif re.search(substring, my_string):\n    print("Found")\nelse:\n    print("Not Found")`,
+                output: `Found`
             },
             {
                 category: "Lists",
-                title: "21. Perform list operations (add, insert, slicing)",
-                code: `my_list = [1, 2, 3, 4, 5]\nprint(f"Original list: {my_list}")\n\nmy_list.append(6)\nprint(f"After adding (append): {my_list}")\n\nmy_list.insert(2, 99)\nprint(f"After inserting 99 at index 2: {my_list}")\n\nsliced_list = my_list[1:5]\nprint(f"Sliced list (index 1 to 4): {sliced_list}")`,
-                output: `Original list: [1, 2, 3, 4, 5]\nAfter adding (append): [1, 2, 3, 4, 5, 6]\nAfter inserting 99 at index 2: [1, 2, 99, 3, 4, 5, 6]\nSliced list (index 1 to 4): [2, 99, 3, 4]`
+                title: "21. Write a program to perform the given operations on a list: i. add ii. Insert iii. slicing",
+                code: `my_list = [1, 2, 4, 5]\n\n# Add to end\nmy_list.append(6)\nprint(my_list)\n\n# Insert at index 2\nmy_list.insert(2, 3)\nprint(my_list)\n\n# Get a slice from index 1 to 4\nprint(my_list[1:4])`,
+                output: "[1, 2, 4, 5, 6]\n[1, 2, 3, 4, 5, 6]\n[2, 3, 4]"
             },
             {
                 category: "Lists",
-                title: "22. Perform 5 built-in list functions",
-                code: `numbers = [5, 2, 8, 1, 9, 4]\n\nprint(f"Length: {len(numbers)}")\nprint(f"Max: {max(numbers)}")\nprint(f"Min: {min(numbers)}")\nprint(f"Sum: {sum(numbers)}")\nprint(f"Sorted: {sorted(numbers)}")`,
-                output: `Length: 6\nMax: 9\nMin: 1\nSum: 29\nSorted: [1, 2, 4, 5, 8, 9]`
+                title: "22. Write a program to perform any 5 built-in functions by taking any list.",
+                code: `numbers = [5, 2, 8, 1, 9, 4]\n\nprint(len(numbers))\nprint(max(numbers))\nprint(min(numbers))\nprint(sum(numbers))\nprint(sorted(numbers))`,
+                output: "6\n9\n1\n29\n[1, 2, 4, 5, 8, 9]"
             },
             {
                 category: "Lists",
-                title: "23. Get even numbers from a list using comprehensions",
-                code: `numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\neven_numbers = [num for num in numbers if num % 2 == 0]\n\nprint(f"Original list: {numbers}")\nprint(f"Even numbers list: {even_numbers}")`,
-                output: `Original list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nEven numbers list: [2, 4, 6, 8, 10]`
+                title: "23. Write a program to get a list of the even numbers from a given list of numbers (use only comprehensions).",
+                code: `numbers = [1, 2, 3, 4, 5, 6]\n\neven_numbers = [num for num in numbers if num % 2 == 0]\n\nprint(even_numbers)`,
+                output: "[2, 4, 6]"
             },
             {
                 category: "Lists",
-                title: "24. Implement round robin",
-                code: `def round_robin(*iterables):\n    iterators = [iter(it) for it in iterables]\n    while iterators:\n        active_iterators = []\n        for it in iterators:\n            try:\n                yield next(it)\n                active_iterators.append(it)\n            except StopIteration:\n                pass\n        iterators = active_iterators\n\nprint("Round Robin Example:")\nfor item in round_robin([1, 2, 3], (4, 5)):\n    print(item, end=' ')\nprint()`,
-                output: `Round Robin Example:\n1 4 2 5 3`
+                title: "24. Write a program to implement round robin.",
+                code: `def round_robin(list1, list2):\n    result = []\n    len1, len2 = len(list1), len(list2)\n    for i in range(max(len1, len2)):\n        if i < len1:\n            result.append(list1[i])\n        if i < len2:\n            result.append(list2[i])\n    return result\n\nprint(round_robin([1, 2, 3], [4, 5]))`,
+                output: "[1, 4, 2, 5, 3]"
             },
             {
                 category: "Tuples",
-                title: "25. Create and concatenate tuples",
-                code: `member1 = ("Alice", 30, "123 Main St", "State University")\nmember2 = ("Bob", 25, "456 Oak Ave", "City College")\n\nprint(f"Member 1: {member1}")\nprint(f"Member 2: {member2}")\n\nall_members = member1 + member2\n\nprint(f"Concatenated Tuples: {all_members}")`,
-                output: `Member 1: ('Alice', 30, '123 Main St', 'State University')\nMember 2: ('Bob', 25, '456 Oak Ave', 'City College')\nConcatenated Tuples: ('Alice', 30, '123 Main St', 'State University', 'Bob', 25, '456 Oak Ave', 'City College')`
+                title: "25. Write a program to create tuples (name, age, address, college) for at least two members and concatenate the tuples and print the concatenated tuples.",
+                code: `member1 = ("Alice", 30)\nmember2 = ("Bob", 25)\n\nall_members = member1 + member2\n\nprint(all_members)`,
+                output: "('Alice', 30, 'Bob', 25)"
             },
             {
                 category: "Sets",
-                title: "26. Return top 'n' most frequent characters",
-                code: `from collections import Counter\n\nmy_string = "aaaaabbbbcccc"\nn = 2\n\nchar_counts = Counter(my_string)\ntop_n = char_counts.most_common(n)\n\nprint(f"The top {n} most frequent characters are: {top_n}")`,
-                output: `The top 2 most frequent characters are: [('a', 5), ('b', 4)]`
+                title: "26. Write a program to return the top 'n' most frequently occurring chars and their respective counts.",
+                code: `from collections import Counter\n\nmy_string = "aaaaabbbbcccc"\nn = 2\n\nchar_counts = Counter(my_string)\ntop_n = char_counts.most_common(n)\n\nprint(top_n)`,
+                output: "[('a', 5), ('b', 4)]"
             },
             {
                 category: "Sets",
-                title: "27. Count vowels in a string (No control flow)",
-                code: `my_string = "hello world this is a test"\nvowels = "aeiouAEIOU"\n\nvowel_count = sum(1 for char in my_string if char in vowels)\n\nprint(f"The number of vowels is: {vowel_count}")`,
-                output: `The number of vowels is: 7`
+                title: "27. Write a program to count the number of vowels in a string (No control flow allowed).",
+                code: `my_string = "hello world"\nvowels = "aeiou"\n\nvowel_count = sum(my_string.lower().count(v) for v in vowels)\nprint(vowel_count)`,
+                output: `3`
             },
             {
                 category: "Sets",
-                title: "28. Find letters present in both strings",
-                code: `str1 = "hello"\nstr2 = "world"\n\nset1 = set(str1)\nset2 = set(str2)\n\ncommon_letters = set1.intersection(set2)\n\nprint(f"Letters present in both strings: {common_letters}")`,
-                output: `Letters present in both strings: {'o', 'l'}`
+                title: "28. Write a program that displays which letters are present in both strings.",
+                code: `str1 = "hello"\nstr2 = "world"\n\nset1 = set(str1)\nset2 = set(str2)\n\ncommon_letters = set1.intersection(set2)\n\nprint(common_letters)`,
+                output: "{'o', 'l'}"
             },
             {
                 category: "Sets",
-                title: "29. Sort strings by vowel count",
-                code: `def count_vowels(s):\n    vowels = "aeiouAEIOU"\n    return sum(1 for char in s if char in vowels)\n\nstring_list = ["apple", "banana", "kiwi", "rhythm", "orange"]\nsorted_list = sorted(string_list, key=count_vowels)\n\nprint(f"Original list: {string_list}")\nprint(f"Sorted by vowel count: {sorted_list}")`,
-                output: `Original list: ['apple', 'banana', 'kiwi', 'rhythm', 'orange']\nSorted by vowel count: ['rhythm', 'apple', 'kiwi', 'banana', 'orange']`
+                title: "29. Write a program to sort given list of strings in the order of their vowel counts.",
+                code: `def count_vowels(s):\n    return sum(1 for char in s if char in "aeiouAEIOU")\n\nstring_list = ["apple", "banana", "kiwi", "rhythm"]\n\nsorted_list = sorted(string_list, key=count_vowels)\n\nprint(sorted_list)`,
+                output: "['rhythm', 'apple', 'kiwi', 'banana']"
             },
             {
                 category: "Dictionaries",
-                title: "30. Generate a dictionary of squares",
+                title: "30. Write a program to generate a dictionary that contains numbers (between 1 and n) in the form of (X, X*X).",
                 code: `n = 5\nsquared_dict = {x: x*x for x in range(1, n + 1)}\nprint(squared_dict)`,
-                output: `{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}`
+                output: "{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}"
             },
             {
                 category: "Dictionaries",
-                title: "31. Check if a key exists in a dictionary",
-                code: `my_dict = {"name": "John", "age": 30, "city": "New York"}\nkey_to_check = "age"\n\nif key_to_check in my_dict:\n    print(f"Key '{key_to_check}' exists in the dictionary.")\nelse:\n    print(f"Key '{key_to_check}' does not exist.")`,
-                output: `Key 'age' exists in the dictionary.`
+                title: "31. Write a program to check if a given key exists in a dictionary or not.",
+                code: `my_dict = {"name": "John", "age": 30}\n\nif "age" in my_dict:\n    print("Exists")\nelse:\n    print("Does not exist")`,
+                output: `Exists`
             },
             {
                 category: "Dictionaries",
-                title: "32. Add a new key-value pair to a dictionary",
-                code: `my_dict = {"name": "John", "age": 30}\nprint(f"Original dictionary: {my_dict}")\n\nmy_dict["city"] = "New York"\n\nprint(f"Updated dictionary: {my_dict}")`,
-                output: `Original dictionary: {'name': 'John', 'age': 30}\nUpdated dictionary: {'name': 'John', 'age': 30, 'city': 'New York'}`
+                title: "32. Write a program to add a new key-value pair to an existing dictionary.",
+                code: `my_dict = {"name": "John", "age": 30}\n\nmy_dict["city"] = "New York"\n\nprint(my_dict)`,
+                output: "{'name': 'John', 'age': 30, 'city': 'New York'}"
             },
             {
                 category: "Dictionaries",
-                title: "33. Sum all items in a dictionary",
-                code: `my_dict = {'data1': 100, 'data2': -54, 'data3': 247}\n\ntotal_sum = sum(my_dict.values())\n\nprint(f"The sum of all items is: {total_sum}")`,
-                output: `The sum of all items is: 293`
+                title: "33. Write a program to sum all the items in a given dictionary.",
+                code: `my_dict = {'data1': 100, 'data2': -54, 'data3': 247}\n\ntotal_sum = sum(my_dict.values())\n\nprint(total_sum)`,
+                output: `293`
             },
             {
                 category: "Files",
-                title: "34. Sort words from a file into another file",
-                code: `try:\n    with open("source.txt", "w") as f:\n        f.write("This is a Test file.\\nPython is Fun and easy to Learn.")\n\n    with open("source.txt", "r") as source_file:\n        words = source_file.read().lower().split()\n        words.sort()\n\n    with open("destination.txt", "w") as dest_file:\n        for word in words:\n            dest_file.write(word + "\\n")\n\n    print("Words have been sorted and saved to destination.txt")\n\nexcept Exception as e:\n    print(f"An error occurred: {e}")`,
-                output: `Words have been sorted and saved to destination.txt`
+                title: "34. Write a program to sort words in a file and put them in another file.",
+                code: `words = ["This", "is", "a", "Test", "file"]\n\n# Convert all to lowercase\nlower_words = [w.lower() for w in words]\n\n# Sort the words\nlower_words.sort()\n\nprint(lower_words)`,
+                output: "['a', 'file', 'is', 'test', 'this']"
             },
             {
                 category: "Files",
-                title: "35. Find the most frequent words in a text file",
-                code: `from collections import Counter\nimport re\n\ntry:\n    with open("text_sample.txt", "w") as f:\n        f.write("big black bug bit a big black dog on his big black nose")\n\n    with open("text_sample.txt", "r") as file:\n        words = re.findall(r'\\b\\w+\\b', file.read().lower())\n        word_counts = Counter(words)\n        most_common_words = word_counts.most_common(3)\n        print("Most frequent words:")\n        for word, count in most_common_words:\n            print(f"'{word}': {count} times")\n\nexcept Exception as e:\n    print(f"An error occurred: {e}")`,
-                output: `Most frequent words:\n'big': 3 times\n'black': 3 times\n'bug': 1 times`
+                title: "35. Write a program to find the most frequent words in a text (read from a text file).",
+                code: `from collections import Counter\n\ntext = "big black bug bit a big black dog"\n\n# Split text into words\nwords = text.split()\n\n# Count word frequency\nword_counts = Counter(words)\n\n# Find the 2 most common words\nprint(word_counts.most_common(2))`,
+                output: "[('big', 2), ('black', 2)]"
             }
         ];
 
@@ -343,21 +349,21 @@
 
                     problemEl.innerHTML = `
                         <button class="accordion-btn w-full text-left p-4 flex justify-between items-center hover:bg-slate-600 transition">
-                            <span class="font-semibold text-slate-200 text-lg">${problem.title}</span>
-                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <span class="font-semibold text-slate-200">${problem.title}</span>
+                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
                             <div class="p-4 border-t border-slate-700">
                                 <div class="mb-4">
                                     <h4 class="font-semibold mb-2 text-slate-300">Code:</h4>
                                     <div class="relative">
-                                        <pre class="code-block p-4 rounded-md overflow-x-auto text-sm" style="font-family: 'Fira Code', monospace;"><code>${problem.code}</code></pre>
+                                        <pre class="code-block p-4 rounded-md overflow-x-auto" style="font-family: 'Fira Code', monospace;"><code>${problem.code}</code></pre>
                                         <button class="copy-btn absolute top-2 right-2 bg-slate-600 hover:bg-sky-500 hover:text-white text-slate-200 text-xs font-semibold py-1 px-2 rounded">Copy</button>
                                     </div>
                                 </div>
                                 <div>
                                     <h4 class="font-semibold mb-2 text-slate-300">Sample Output:</h4>
-                                    <pre class="bg-output-bg text-cyan-300 p-4 rounded-md overflow-x-auto text-sm" style="font-family: 'Fira Code', monospace;">${problem.output}</pre>
+                                    <pre class="bg-output-bg text-cyan-300 p-4 rounded-md overflow-x-auto" style="font-family: 'Fira Code', monospace;">${problem.output}</pre>
                                 </div>
                             </div>
                         </div>
