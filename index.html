@@ -6,8 +6,8 @@
     <title>Python Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Midnight Slate -->
-    <!-- Application Structure Plan: A responsive sidebar-content layout. The sidebar contains navigation links for Python topics. The main content area displays a list of interactive accordions for each problem. This structure is chosen for its intuitive navigation, allowing users to filter content by topic and explore solutions without being overwhelmed. Key interactions include topic filtering via the sidebar, a live search bar to filter problems by title, and accordion toggles to show/hide code and output, enhancing usability over a static document. -->
-    <!-- Visualization & Content Choices: The 35 Python problems are organized using an accordion interface (HTML/CSS/JS) for the "Organize" and "Inform" goals. Each problem's title, code, and output are presented in distinct, styled blocks. Interactions: Sidebar links filter accordions by a `data-category` attribute; a search input filters by title; accordion headers toggle content visibility; a "Copy" button uses JS to copy code. This approach uses standard HTML and vanilla JS for a lightweight, fast, and highly functional user experience without external visualization libraries, as no charts are needed. -->
+    <!-- Application Structure Plan: A single-column, mobile-first layout. The sidebar is removed and replaced with a dropdown filter for categories, placed next to the search bar. This creates a streamlined, responsive interface that works well on all devices. Key interactions: Category filtering via dropdown, live search, and accordion toggles to show/hide code. This structure prioritizes content and accessibility on smaller screens. -->
+    <!-- Visualization & Content Choices: The 35 Python problems are organized using an accordion interface (HTML/CSS/JS) for the "Organize" and "Inform" goals. Each problem's title, code, and output are presented in distinct, styled blocks. Interactions: A dropdown filters accordions by `data-category`; a search input filters by title; accordion headers toggle content visibility; a "Copy" button uses JS to copy code. This approach uses standard HTML and vanilla JS for a lightweight, fast, and highly functional user experience without external visualization libraries, as no charts are needed. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         :root {
@@ -21,6 +21,9 @@
             --code-bg: #0f172a;
             --output-bg: #020617;
         }
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: 'Segoe UI', 'Inter', sans-serif;
             background-color: var(--bg-main);
@@ -28,14 +31,6 @@
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
-        }
-        .sidebar-link {
-            transition: all 0.2s ease-in-out;
-        }
-        .sidebar-link.active, .sidebar-link:hover {
-            background-color: var(--accent);
-            color: #0f172a;
-            transform: translateX(4px);
         }
         .accordion-content {
             max-height: 0;
@@ -58,42 +53,54 @@
         .accordion-btn.open svg {
             transform: rotate(180deg);
         }
+        /* Custom style for the select dropdown arrow */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Segoe+UI:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
 </head>
-<body class="antialiased">
+<body class="antialiased bg-slate-800">
 
-    <div class="flex h-screen bg-slate-800">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 bg-slate-900 shadow-lg flex-shrink-0 p-4 space-y-2">
-            <h1 class="text-2xl font-bold text-white mb-6">Python Lab</h1>
-            <nav id="topic-nav">
-                <!-- Navigation links will be injected here -->
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
-            <div class="max-w-4xl mx-auto">
-                <header class="mb-8">
-                    <h2 class="text-3xl font-bold text-white">Enjoy ;)</h2>
-                    <p class="text-slate-400 mt-1">An interactive guide to the Python lab exercises. Select a topic from the sidebar or use the search below.</p>
-                    <div class="mt-6">
+    <!-- Main Content -->
+    <main class="p-4 sm:p-6 md:p-8">
+        <div class="max-w-5xl mx-auto">
+            <header class="mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Python Lab</h1>
+                <p class="text-slate-400 mt-2 text-center">An interactive guide to the Python lab exercises.</p>
+                
+                <!-- Filter and Search Controls -->
+                <div class="mt-8 flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label for="category-select" class="sr-only">Filter by category</label>
+                        <select id="category-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
+                            <!-- Categories will be injected here -->
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label for="search-input" class="sr-only">Search problems</label>
                         <input type="text" id="search-input" placeholder="🔍 Search for a problem..." class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
                     </div>
-                </header>
-
-                <div id="problems-container" class="space-y-4">
-                    <!-- Problems will be injected here -->
                 </div>
-                 <footer class="text-center mt-12 text-slate-500 text-sm">
-                    <p>Created for Exampaglus</p>
-                </footer>
+            </header>
+
+            <div id="problems-container" class="space-y-4">
+                <!-- Problems will be injected here -->
             </div>
-        </main>
-    </div>
+             <footer class="text-center mt-12 text-slate-500 text-sm">
+                <p>Created for Exampaglus</p>
+            </footer>
+        </div>
+    </main>
 
     <script>
         const labData = [
@@ -311,15 +318,15 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const problemsContainer = document.getElementById('problems-container');
-            const topicNav = document.getElementById('topic-nav');
+            const categorySelect = document.getElementById('category-select');
             const searchInput = document.getElementById('search-input');
 
-            const categories = ['All', ...new Set(labData.map(p => p.category))];
+            const categories = ['All Categories', ...new Set(labData.map(p => p.category))];
 
-            function renderProblems(filterCategory = 'All', searchTerm = '') {
+            function renderProblems(filterCategory = 'All Categories', searchTerm = '') {
                 problemsContainer.innerHTML = '';
                 const filteredData = labData.filter(p => {
-                    const categoryMatch = filterCategory === 'All' || p.category === filterCategory;
+                    const categoryMatch = filterCategory === 'All Categories' || p.category === filterCategory;
                     const searchMatch = p.title.toLowerCase().includes(searchTerm.toLowerCase());
                     return categoryMatch && searchMatch;
                 });
@@ -359,9 +366,9 @@
                 });
             }
 
-            function renderNav() {
-                topicNav.innerHTML = categories.map(cat => `
-                    <a href="#" class="sidebar-link block p-2 rounded-md font-semibold text-slate-300 ${cat === 'All' ? 'active' : ''}" data-category="${cat}">${cat}</a>
+            function renderCategoryFilter() {
+                categorySelect.innerHTML = categories.map(cat => `
+                    <option value="${cat}">${cat}</option>
                 `).join('');
             }
             
@@ -383,22 +390,15 @@
                 setTimeout(() => { button.innerText = 'Copy'; }, 2000);
             }
             
-            renderNav();
+            renderCategoryFilter();
             renderProblems();
 
-            topicNav.addEventListener('click', e => {
-                e.preventDefault();
-                if (e.target.matches('.sidebar-link')) {
-                    const category = e.target.dataset.category;
-                    document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-                    e.target.classList.add('active');
-                    renderProblems(category, searchInput.value);
-                }
+            categorySelect.addEventListener('change', () => {
+                renderProblems(categorySelect.value, searchInput.value);
             });
 
             searchInput.addEventListener('input', () => {
-                const activeCategory = document.querySelector('.sidebar-link.active').dataset.category;
-                renderProblems(activeCategory, searchInput.value);
+                renderProblems(categorySelect.value, searchInput.value);
             });
 
             problemsContainer.addEventListener('click', e => {
