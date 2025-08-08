@@ -3,423 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Lab</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Midnight Slate -->
-    <!-- Application Structure Plan: A single-column, mobile-first layout. The sidebar is removed and replaced with a dropdown filter for categories, placed next to the search bar. This creates a streamlined, responsive interface that works well on all devices. Key interactions: Category filtering via dropdown, live search, and accordion toggles to show/hide code. This structure prioritizes content and accessibility on smaller screens. -->
-    <!-- Visualization & Content Choices: The 35 Python problems are organized using an accordion interface (HTML/CSS/JS) for the "Organize" and "Inform" goals. Each problem's title, code, and output are presented in distinct, styled blocks. Interactions: A dropdown filters accordions by `data-category`; a search input filters by title; accordion headers toggle content visibility; a "Copy" button uses JS to copy code. This approach uses standard HTML and vanilla JS for a lightweight, fast, and highly functional user experience without external visualization libraries, as no charts are needed. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        :root {
-            --bg-main: #1e293b;
-            --bg-sidebar: #0f172a;
-            --bg-card: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent: #38bdf8;
-            --border-color: #475569;
-            --code-bg: #0f172a;
-            --output-bg: #020617;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: 'Segoe UI', 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            font-size: 14px; /* Smaller base font size */
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
-        }
-        h1 {
-            font-size: 1.875rem; /* 30px */
-        }
-        .accordion-btn span {
-            font-size: 1rem; /* 16px */
-        }
-        pre, code {
-            font-size: 0.875rem; /* 14px */
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .accordion-btn.open + .accordion-content {
-            max-height: 1200px;
-        }
-        .code-block {
-            background-color: var(--code-bg);
-            border-left: 3px solid var(--accent);
-        }
-        .copy-btn {
-            transition: background-color 0.2s;
-        }
-        .accordion-btn svg {
-            transition: transform 0.3s ease;
-        }
-        .accordion-btn.open svg {
-            transform: rotate(180deg);
-        }
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-        }
-    </style>
+    <title>Stay Tuned</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Segoe+UI:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styles */
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow: hidden; /* Hide scrollbars */
+            background-color: #1a1a2e; /* Dark blue background color */
+        }
+
+        /* Canvas for the animated background */
+        #art-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place it behind the content */
+        }
+
+        /* Container for the text content */
+        .content-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            text-align: center;
+            color: #e0e0e0; /* Light grey text color */
+        }
+
+        /* Main heading style */
+        .notice-text {
+            font-size: 5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Subtle text shadow for depth */
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        /* Fade-in animation for the text */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .notice-text {
+                font-size: 3.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .notice-text {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="antialiased bg-slate-800">
+<body>
 
-    <!-- Main Content -->
-    <main class="p-4 sm:p-6 md:p-8">
-        <div class="max-w-5xl mx-auto">
-            <header class="mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Python Lab</h1>
-                <p class="text-slate-400 mt-2 text-center">An interactive guide to the Python lab exercises.</p>
-                
-                <div class="mt-8 flex flex-col md:flex-row gap-4">
-                    <div class="flex-1">
-                        <label for="category-select" class="sr-only">Filter by category</label>
-                        <select id="category-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
-                        </select>
-                    </div>
-                    <div class="flex-1">
-                        <label for="search-input" class="sr-only">Search problems</label>
-                        <input type="text" id="search-input" placeholder="🔍 Search for a problem..." class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
-                    </div>
-                </div>
-            </header>
+    <!-- Canvas element for the animated background art -->
+    <canvas id="art-background"></canvas>
 
-            <div id="problems-container" class="space-y-4">
-            </div>
-             <footer class="text-center mt-12 text-slate-500 text-xs">
-                <p>Created for Exampaglus ;)</p>
-            </footer>
-        </div>
-    </main>
+    <!-- Main content container -->
+    <div class="content-container">
+        <h1 class="notice-text">Stay Tuned</h1>
+    </div>
 
     <script>
-        const labData = [
-            {
-                category: "Variables & Functions",
-                title: "1. Write a program to demonstrate different number data types in Python.",
-                code: `a = 10       # Integer\nb = 10.5     # Float\nc = 1 + 2j   # Complex\n\nprint(type(a))\nprint(type(b))\nprint(type(c))`,
-                output: `&lt;class 'int'&gt;\n&lt;class 'float'&gt;\n&lt;class 'complex'&gt;`
-            },
-            {
-                category: "Variables & Functions",
-                title: "2. Write a program to perform different Arithmetic Operations on numbers in Python.",
-                code: `a = 20\nb = 5\n\nprint(a + b)  # Addition\nprint(a - b)  # Subtraction\nprint(a * b)  # Multiplication\nprint(a / b)  # Division`,
-                output: `25\n15\n100\n4.0`
-            },
-            {
-                category: "Variables & Functions",
-                title: "3. Write a program to create, concatenate and print a string and accessing sub-string from a given string.",
-                code: `str1 = "Hello"\nstr2 = "World"\n\n# Concatenate\nresult = str1 + " " + str2\nprint(result)\n\n# Access sub-string (from index 6 to end)\nsub = result[6:]\nprint(sub)`,
-                output: `Hello World\nWorld`
-            },
-            {
-                category: "Variables & Functions",
-                title: "4. Create a variable 'number' and assign an Integer to the number. Check the assigned Integer is 'Positive' or 'Negative'.",
-                code: `number = -15\n\nif number > 0:\n    print("Positive")\nelif number < 0:\n    print("Negative")\nelse:\n    print("Zero")`,
-                output: `Negative`
-            },
-            {
-                category: "Variables & Functions",
-                title: "5. Write a program to find the largest element among three Numbers.",
-                code: `num1 = 10\nnum2 = 55\nnum3 = 25\n\n# Using the built-in max() function is the simplest way\nlargest = max(num1, num2, num3)\nprint(largest)`,
-                output: `55`
-            },
-            {
-                category: "Variables & Functions",
-                title: "6. Write a program to print the sum of all the even numbers in the range 1 to 50 and print the even sum.",
-                code: `even_sum = 0\n# The range is from 1 to 50\nfor number in range(1, 51):\n    if number % 2 == 0:\n        even_sum += number\n\nprint(even_sum)`,
-                output: `650`
-            },
-            {
-                category: "Variables & Functions",
-                title: "7. Write a Program to display all prime numbers within an interval of 20 and 50.",
-                code: `# Prime numbers between 20 and 50\nfor num in range(20, 51):\n   if num > 1:\n       # Check for factors\n       for i in range(2, num):\n           if (num % i) == 0:\n               break\n       else:\n           print(num)`,
-                output: `23\n29\n31\n37\n41\n43\n47`
-            },
-            {
-                category: "Variables & Functions",
-                title: "8. Write a program to swap two numbers without using a temporary variable.",
-                code: `a = 10\nb = 20\n\nprint(f"Before: a={a}, b={b}")\n\n# Pythonic way to swap\na, b = b, a\n\nprint(f"After: a={a}, b={b}")`,
-                output: `Before: a=10, b=20\nAfter: a=20, b=10`
-            },
-            {
-                category: "Variables & Functions",
-                title: "9. Write a program to define a function with multiple return values.",
-                code: `def get_user():\n    name = "Alex"\n    age = 30\n    return name, age\n\nuser_name, user_age = get_user()\n\nprint(user_name)\nprint(user_age)`,
-                output: `Alex\n30`
-            },
-            {
-                category: "Variables & Functions",
-                title: "10. Write a python program to find factorial of a number using Recursion.",
-                code: `def factorial(n):\n   if n == 0:\n       return 1\n   else:\n       return n * factorial(n-1)\n\nprint(factorial(5))`,
-                output: `120`
-            },
-            {
-                category: "Variables & Functions",
-                title: "11. Write a python script to print the current date in the following format 'WED 09 02:26:23 IST 2020'.",
-                code: `import time\n\n# Format: Weekday Month Day HH:MM:SS Year\nprint(time.ctime())`,
-                output: `(Output will vary based on current time)\nExample: Thu Jul 24 08:00:00 2025`
-            },
-            {
-                category: "Variables & Functions",
-                title: "12. Write a Python program to convert temperatures to and from Celsius, Fahrenheit.",
-                code: `def celsius_to_fahrenheit(c):\n    return (c * 9/5) + 32\n\ncelsius = 37\nfahrenheit = celsius_to_fahrenheit(celsius)\nprint(fahrenheit)`,
-                output: `98.6`
-            },
-            {
-                category: "Variables & Functions",
-                title: "13. Write a Python script that prints prime numbers less than 20.",
-                code: `for num in range(2, 20):\n    if num > 1:\n       for i in range(2, num):\n           if (num % i) == 0:\n               break\n       else:\n           print(num)`,
-                output: `2\n3\n5\n7\n11\n13\n17\n19`
-            },
-            {
-                category: "Loops & Conditionals",
-                title: "14. Write a program to print the following patterns using loop: * ** *** ****",
-                code: `for i in range(1, 5):\n    print("*" * i)`,
-                output: `*\n**\n***\n****`
-            },
-            {
-                category: "Loops & Conditionals",
-                title: "15. Write a program to print multiplication tables of 8, 15, 69.",
-                code: `num = 8\nfor i in range(1, 11):\n    print(f"{num} x {i} = {num * i}")`,
-                output: "8 x 1 = 8\n8 x 2 = 16\n8 x 3 = 24\n8 x 4 = 32\n8 x 5 = 40\n8 x 6 = 48\n8 x 7 = 56\n8 x 8 = 64\n8 x 9 = 72\n8 x 10 = 80"
-            },
-            {
-                category: "Loops & Conditionals",
-                title: "16. Write a program to check whether the given input is digit or lowercase character or uppercase character or a special character.",
-                code: `char = 'a' # Example input\n\nif char.isdigit():\n    print("Digit")\nelif char.islower():\n    print("Lowercase")\nelif char.isupper():\n    print("Uppercase")\nelse:\n    print("Special Character")`,
-                output: `Lowercase`
-            },
-            {
-                category: "Loops & Conditionals",
-                title: "17. Write a python Program to print the Fibonacci sequence using while loop.",
-                code: `n_terms = 10\nn1, n2 = 0, 1\ncount = 0\n\nwhile count < n_terms:\n   print(n1)\n   nth = n1 + n2\n   n1 = n2\n   n2 = nth\n   count += 1`,
-                output: `0\n1\n1\n2\n3\n5\n8\n13\n21\n34`
-            },
-            {
-                category: "Strings",
-                title: "18. Write a program to find the length of the string without using any library functions.",
-                code: `my_string = "Hello"\ncount = 0\nfor char in my_string:\n    count += 1\nprint(count)`,
-                output: `5`
-            },
-            {
-                category: "Strings",
-                title: "19. Write a program to check if two strings are anagrams or not.",
-                code: `str1 = "listen"\nstr2 = "silent"\n\nif sorted(str1) == sorted(str2):\n    print("Anagrams")\nelse:\n    print("Not Anagrams")`,
-                output: `Anagrams`
-            },
-            {
-                category: "Strings",
-                title: "20. Write a program to check if the substring is present in a given string or not (use regular expressions).",
-                code: `import re\n\nmy_string = "The quick brown fox"\nsubstring = "fox"\n\nif re.search(substring, my_string):\n    print("Found")\nelse:\n    print("Not Found")`,
-                output: `Found`
-            },
-            {
-                category: "Lists",
-                title: "21. Write a program to perform the given operations on a list: i. add ii. Insert iii. slicing",
-                code: `my_list = [1, 2, 4, 5]\n\n# Add to end\nmy_list.append(6)\nprint(my_list)\n\n# Insert at index 2\nmy_list.insert(2, 3)\nprint(my_list)\n\n# Get a slice from index 1 to 4\nprint(my_list[1:4])`,
-                output: "[1, 2, 4, 5, 6]\n[1, 2, 3, 4, 5, 6]\n[2, 3, 4]"
-            },
-            {
-                category: "Lists",
-                title: "22. Write a program to perform any 5 built-in functions by taking any list.",
-                code: `numbers = [5, 2, 8, 1, 9, 4]\n\nprint(len(numbers))\nprint(max(numbers))\nprint(min(numbers))\nprint(sum(numbers))\nprint(sorted(numbers))`,
-                output: "6\n9\n1\n29\n[1, 2, 4, 5, 8, 9]"
-            },
-            {
-                category: "Lists",
-                title: "23. Write a program to get a list of the even numbers from a given list of numbers (use only comprehensions).",
-                code: `numbers = [1, 2, 3, 4, 5, 6]\n\neven_numbers = [num for num in numbers if num % 2 == 0]\n\nprint(even_numbers)`,
-                output: "[2, 4, 6]"
-            },
-            {
-                category: "Lists",
-                title: "24. Write a program to implement round robin.",
-                code: `def round_robin(list1, list2):\n    result = []\n    len1, len2 = len(list1), len(list2)\n    for i in range(max(len1, len2)):\n        if i < len1:\n            result.append(list1[i])\n        if i < len2:\n            result.append(list2[i])\n    return result\n\nprint(round_robin([1, 2, 3], [4, 5]))`,
-                output: "[1, 4, 2, 5, 3]"
-            },
-            {
-                category: "Tuples",
-                title: "25. Write a program to create tuples (name, age, address, college) for at least two members and concatenate the tuples and print the concatenated tuples.",
-                code: `member1 = ("Alice", 30)\nmember2 = ("Bob", 25)\n\nall_members = member1 + member2\n\nprint(all_members)`,
-                output: "('Alice', 30, 'Bob', 25)"
-            },
-            {
-                category: "Sets",
-                title: "26. Write a program to return the top 'n' most frequently occurring chars and their respective counts.",
-                code: `from collections import Counter\n\nmy_string = "aaaaabbbbcccc"\nn = 2\n\nchar_counts = Counter(my_string)\ntop_n = char_counts.most_common(n)\n\nprint(top_n)`,
-                output: "[('a', 5), ('b', 4)]"
-            },
-            {
-                category: "Sets",
-                title: "27. Write a program to count the number of vowels in a string (No control flow allowed).",
-                code: `my_string = "hello world"\nvowels = "aeiou"\n\nvowel_count = sum(my_string.lower().count(v) for v in vowels)\nprint(vowel_count)`,
-                output: `3`
-            },
-            {
-                category: "Sets",
-                title: "28. Write a program that displays which letters are present in both strings.",
-                code: `str1 = "hello"\nstr2 = "world"\n\nset1 = set(str1)\nset2 = set(str2)\n\ncommon_letters = set1.intersection(set2)\n\nprint(common_letters)`,
-                output: "{'o', 'l'}"
-            },
-            {
-                category: "Sets",
-                title: "29. Write a program to sort given list of strings in the order of their vowel counts.",
-                code: `def count_vowels(s):\n    return sum(1 for char in s if char in "aeiouAEIOU")\n\nstring_list = ["apple", "banana", "kiwi", "rhythm"]\n\nsorted_list = sorted(string_list, key=count_vowels)\n\nprint(sorted_list)`,
-                output: "['rhythm', 'apple', 'kiwi', 'banana']"
-            },
-            {
-                category: "Dictionaries",
-                title: "30. Write a program to generate a dictionary that contains numbers (between 1 and n) in the form of (X, X*X).",
-                code: `n = 5\nsquared_dict = {x: x*x for x in range(1, n + 1)}\nprint(squared_dict)`,
-                output: "{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}"
-            },
-            {
-                category: "Dictionaries",
-                title: "31. Write a program to check if a given key exists in a dictionary or not.",
-                code: `my_dict = {"name": "John", "age": 30}\n\nif "age" in my_dict:\n    print("Exists")\nelse:\n    print("Does not exist")`,
-                output: `Exists`
-            },
-            {
-                category: "Dictionaries",
-                title: "32. Write a program to add a new key-value pair to an existing dictionary.",
-                code: `my_dict = {"name": "John", "age": 30}\n\nmy_dict["city"] = "New York"\n\nprint(my_dict)`,
-                output: "{'name': 'John', 'age': 30, 'city': 'New York'}"
-            },
-            {
-                category: "Dictionaries",
-                title: "33. Write a program to sum all the items in a given dictionary.",
-                code: `my_dict = {'data1': 100, 'data2': -54, 'data3': 247}\n\ntotal_sum = sum(my_dict.values())\n\nprint(total_sum)`,
-                output: `293`
-            },
-            {
-                category: "Files",
-                title: "34. Write a program to sort words in a file and put them in another file.",
-                code: `words = ["This", "is", "a", "Test", "file"]\n\n# Convert all to lowercase\nlower_words = [w.lower() for w in words]\n\n# Sort the words\nlower_words.sort()\n\nprint(lower_words)`,
-                output: "['a', 'file', 'is', 'test', 'this']"
-            },
-            {
-                category: "Files",
-                title: "35. Write a program to find the most frequent words in a text (read from a text file).",
-                code: `from collections import Counter\n\ntext = "big black bug bit a big black dog"\n\n# Split text into words\nwords = text.split()\n\n# Count word frequency\nword_counts = Counter(words)\n\n# Find the 2 most common words\nprint(word_counts.most_common(2))`,
-                output: "[('big', 2), ('black', 2)]"
-            }
-        ];
+        // --- Canvas Animation Setup ---
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const problemsContainer = document.getElementById('problems-container');
-            const categorySelect = document.getElementById('category-select');
-            const searchInput = document.getElementById('search-input');
+        const canvas = document.getElementById('art-background');
+        const ctx = canvas.getContext('2d');
 
-            const categories = ['All Categories', ...new Set(labData.map(p => p.category))];
+        // Set canvas dimensions to fill the window
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            function renderProblems(filterCategory = 'All Categories', searchTerm = '') {
-                problemsContainer.innerHTML = '';
-                const filteredData = labData.filter(p => {
-                    const categoryMatch = filterCategory === 'All Categories' || p.category === filterCategory;
-                    const searchMatch = p.title.toLowerCase().includes(searchTerm.toLowerCase());
-                    return categoryMatch && searchMatch;
-                });
+        let particlesArray;
 
-                if (filteredData.length === 0) {
-                    problemsContainer.innerHTML = `<div class="text-center p-8 bg-slate-700 rounded-lg shadow-sm"><p class="text-slate-400">No problems found. Try adjusting your search or filter.</p></div>`;
-                    return;
-                }
-
-                filteredData.forEach((problem) => {
-                    const problemEl = document.createElement('div');
-                    problemEl.className = 'bg-card border border-slate-700 rounded-lg shadow-md overflow-hidden';
-                    problemEl.setAttribute('data-category', problem.category);
-
-                    problemEl.innerHTML = `
-                        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center hover:bg-slate-600 transition">
-                            <span class="font-semibold text-slate-200">${problem.title}</span>
-                            <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-4 border-t border-slate-700">
-                                <div class="mb-4">
-                                    <h4 class="font-semibold mb-2 text-slate-300">Code:</h4>
-                                    <div class="relative">
-                                        <pre class="code-block p-4 rounded-md overflow-x-auto" style="font-family: 'Fira Code', monospace;"><code>${problem.code}</code></pre>
-                                        <button class="copy-btn absolute top-2 right-2 bg-slate-600 hover:bg-sky-500 hover:text-white text-slate-200 text-xs font-semibold py-1 px-2 rounded">Copy</button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold mb-2 text-slate-300">Sample Output:</h4>
-                                    <pre class="bg-output-bg text-cyan-300 p-4 rounded-md overflow-x-auto" style="font-family: 'Fira Code', monospace;">${problem.output}</pre>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    problemsContainer.appendChild(problemEl);
-                });
+        // Particle class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
             }
 
-            function renderCategoryFilter() {
-                categorySelect.innerHTML = categories.map(cat => `
-                    <option value="${cat}">${cat}</option>
-                `).join('');
+            // Method to draw individual particle
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
             }
-            
-            function copyCodeToClipboard(code, button) {
-                const textarea = document.createElement('textarea');
-                textarea.value = code;
-                textarea.style.position = 'absolute';
-                textarea.style.left = '-9999px';
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    button.innerText = 'Copied!';
-                } catch (err) {
-                    button.innerText = 'Failed!';
-                    console.error('Failed to copy text: ', err);
+
+            // Method to update particle position
+            update() {
+                // Check for collision with canvas edges
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
                 }
-                document.body.removeChild(textarea);
-                setTimeout(() => { button.innerText = 'Copy'; }, 2000);
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+
+                // Move the particle
+                this.x += this.directionX;
+                this.y += this.directionY;
+
+                this.draw();
             }
-            
-            renderCategoryFilter();
-            renderProblems();
+        }
 
-            categorySelect.addEventListener('change', () => {
-                renderProblems(categorySelect.value, searchInput.value);
-            });
+        // --- Initialization and Animation Loop ---
 
-            searchInput.addEventListener('input', () => {
-                renderProblems(categorySelect.value, searchInput.value);
-            });
+        // Function to create the particles
+        function init() {
+            particlesArray = [];
+            const numberOfParticles = (canvas.height * canvas.width) / 9000; // Adjust density based on screen size
+            for (let i = 0; i < numberOfParticles; i++) {
+                const size = (Math.random() * 2) + 1;
+                const x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                const y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                const directionX = (Math.random() * .4) - .2; // Slow movement
+                const directionY = (Math.random() * .4) - .2;
+                const color = 'rgba(224, 224, 224, 0.8)';
 
-            problemsContainer.addEventListener('click', e => {
-                const accordionBtn = e.target.closest('.accordion-btn');
-                if (accordionBtn) {
-                    accordionBtn.classList.toggle('open');
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight); // Clear canvas each frame
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect(); // Call function to draw lines between nearby particles
+        }
+
+        // Function to draw lines between particles that are close to each other
+        function connect(){
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    const distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = `rgba(224, 224, 224, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
                 }
-                
-                const copyBtn = e.target.closest('.copy-btn');
-                if(copyBtn) {
-                    const code = copyBtn.closest('.relative').querySelector('code').innerText;
-                    copyCodeToClipboard(code, copyBtn);
-                }
-            });
+            }
+        }
+
+
+        // --- Event Listeners ---
+
+        // Recalculate canvas size and particle positions on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init(); // Re-initialize particles for the new size
         });
+
+        // --- Start the animation ---
+        init();
+        animate();
+
     </script>
+
 </body>
 </html>
